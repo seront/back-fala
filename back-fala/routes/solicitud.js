@@ -15,7 +15,11 @@ var validate = (req, res) => {
   if (!errors.isEmpty()) {
     return res.status(422).json({ errors: errors.array() });
   }
-  fs.writeFile('./output/' + req.body.rut + '.txt', JSON. stringify(req.body), (error) => {
+  var dir = './output/';
+  if (!fs.existsSync(dir)){
+    fs.mkdirSync(dir);
+  }
+  fs.writeFile(dir + req.body.rut + '.txt', JSON. stringify(req.body), (error) => {
     res.status(200).json({ status: "ok" });
   });
 };
